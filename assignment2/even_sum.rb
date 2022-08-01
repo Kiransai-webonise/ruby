@@ -5,38 +5,27 @@ even_sum = 0
 
 #Blocks
 
-a.each {|i|
-    if (i % 2 == 0)
-        even_sum += i
-    end
-}
+a.each { |i| even_sum += i if (i%2 == 0) }
 
 puts even_sum
 
 #lambdas
 
-even_sum1 = -> (arr, even_sum = 0) {
-    arr.each {|i|
-        if (i % 2 == 0)
-            even_sum += i
-        end
-    }
+even_sum1 = -> (arr) {
+    even_sum = 0
+    arr.each {|i| even_sum += i if (i%2 == 0) }
 
     return even_sum
 }
+puts even_sum1.call a
 
-puts even_sum1.call a, 0
 
-
-even_sum1 = Proc.new { |arr, even_sum|
-    arr.each {|i|
-        if (i % 2 == 0)
-            even_sum += i
-        end
-    }
+even_sum1 = Proc.new { |arr|
+    even_sum = 0
+    arr.each {|i| even_sum += i if (i%2 == 0)}
     puts even_sum
 }
 
-puts even_sum1.call a, 0
+puts even_sum1.call a
 #procs
 

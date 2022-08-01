@@ -1,4 +1,5 @@
 require 'csv'
+require './employee.rb'
 
 module Designation
     def self.included(klass)
@@ -8,55 +9,50 @@ module Designation
     module ClassMethods
         def find_experience(experience)
             if (experience > 5)
-                puts "Enployee Designation: Team Lead"
+                puts "Enployee Role: Team Lead"
             else
-                puts "Employee Designation: Developer"
+                puts "Employee Role: Developer"
             end
         end
     end
 
     def find_experience_obj(experience)
         if (experience > 5)
-            puts "Enployee Designation: Team Lead"
+            puts "Enployee Role: Team Lead"
         else
-            puts "Employee Designation: Developer"
+            puts "Employee Role: Developer"
         end
     end
 end
 
 class Company
     include Designation
-    def initialize(id, name, addr, experience, salary, stack)
-        @emp_id = id
-        @emp_name = name
-        @emp_addr = addr
-        @emp_exp = experience
-        @emp_salary = salary
-        @emp_stack = stack
+    def initialize(emp_data)
+        @emp_data = emp_data
     end
 
     def emp_details 
-        puts "Employee Name: #{@emp_name}"
-        puts "Employee Address: #{@emp_addr}"
-        puts "Employee experience: #{@emp_exp}"
-        puts "Employee Salary: #{@emp_salary}"
-        puts "Employee stack: #{division(@emp_stack)}"
+        puts "Employee Name: #{@emp_data['name']}"
+        puts "Employee email: #{@emp_data['email']}"
+        puts "Employee experience: #{@emp_data['experience']} years and #{@emp_data['designation']}"
+        puts "Employee Salary: #{@emp_data['salary']}"
+        puts "Employee stack: #{division(@emp_data['stack'])}"
     end
 
     private
 
     def division emp_stack
-        division = {'web development': 'ruby', 'mobile development': 'android'}
+        division = {'web_development': 'ruby', 'mobile_development': 'android'}
 
-        division.each { |k, v|
+        division.each do |k, v|
             if (v == emp_stack)
                 return k
             end
-        }
+        end
     end
 end
 
-class Getemployees
+class Getemployees  
     def self.read_emp_details
         emp_hash = [];
         CSV.foreach("employees.csv") do |row|
@@ -68,10 +64,16 @@ class Getemployees
                 temp_arr['experience'] = get_experience(row[5])
                 temp_arr['salary'] = row[7]
                 temp_arr['stack'] = 'ruby'
+                if temp_arr['experience'] > 2
+                    emp = SeniorSD.new(temp_arr['experience'])
+                else
+                    emp = JuniorSD.new(temp_arr['experience'])
+                end
+                temp_arr['designation'] = emp.designation 
                 emp_hash << temp_arr
             end
         end
-        return emp_hash
+        emp_hash
     end
 
     private
@@ -80,13 +82,11 @@ class Getemployees
         date1 = DateTime.now()
         date2 = Date.parse(experience)
 
-        return date1.year - date2.year
+        date1.year - date2.year
     end
 end
 
-emp_data = Getemployees.read_emp_details[0]
-
-company_details = Company.new(emp_data['id'], emp_data['name'], emp_data['email'], emp_data['experience'], emp_data['salary'], emp_data['stack'])
+company_details = Company.new(Getemployees.read_emp_details[0])
 
 company_details.emp_details
 
