@@ -4,8 +4,7 @@ str2 = "RUBY does not require (or support) explicit type definition in variable 
 #a
 puts "a. Find occurrence of RUBY from string 1?"
 
-puts str1.scan("RUBY")
-
+puts str1.scan("RUBY").count
 
 puts '
 b. Find the position where RUBY occurs in the string 1.'
@@ -15,7 +14,7 @@ puts (0..str1.length).find_all { |i| str1[i,4] == 'RUBY'}
 puts '
 c. Create array of words in string 1 & print them using a recursive function?'
 split_str1 = str1.split(' ')
-split_str1.length.times { |i| puts split_str1[i] }
+split_str1.each { |i| puts split_str1[i] }
 
 puts '
 d. Capitalise string 1'
@@ -25,18 +24,20 @@ puts split_str1.map { |word| word.capitalize }.join(' ')
 puts '
 e. Combine string 1 & 2?'
 
-puts str1.to_s + str2.to_s
+puts str1 + str2
 
 puts '
 f. Cut the string 1 into 4 parts & print it.'
 
-puts str1.chars.each_slice(str1.length/4).map(&:join)
+puts str1.chars.each_slice(str1.length/3).map(&:join)
 
 puts '
 g. Divide the string 1 by occurrences of ".". Combine the array in reverse word sequence'
 
 split_str1 = str1.split('.')
-split_str1.length.times { |i| puts split_str1[i].reverse}
+reverse_str = ""
+split_str1.length.times { |i| reverse_str += split_str1[i].reverse}
+reverse_str
 
 puts '
 h. Remove the HTML characters from string.'
