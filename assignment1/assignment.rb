@@ -12,7 +12,7 @@ sum_of_cubes (1..4)
 # Given an Array, return the elements that are present exactly once in the array. You need to write a method called non_duplicated_values to accomplish this task. Example: Given [1,2,2,3,3,4,5], the method should return [1,4,5]
 
 def non_duplicated_values dupl_arr
-    uniq_arr = [];
+    uniq_arr = []
     dupl_arr.each { |val|
         if !uniq_arr.include? val
             uniq_arr = uniq_arr.push(val)
@@ -20,7 +20,7 @@ def non_duplicated_values dupl_arr
             uniq_arr.delete(val)
         end
     }
-    uniq_arr;
+    uniq_arr
 end
 
 non_duplicated_values [1,2,2,3,3,4,5]
@@ -29,14 +29,14 @@ non_duplicated_values [1,2,2,3,3,4,5]
 
 def palindrome sentence
     sentence_without_space = sentence.delete(' ').downcase
-    palindrome = '';
+    palindrome = ''
     sent_length = sentence_without_space.length
 
     (sent_length).times { |i|
         palindrome += sentence_without_space[-i - 1].to_s
     }
 
-    palindrome == sentence_without_space ? 'true' : 'false'
+    palindrome == sentence_without_space ? true : false
 end
 
 palindrome "Never odd or even"
@@ -59,7 +59,7 @@ def prime_numbers num_arr
     prime_arr = []
     num_arr.each do |num|
         count = 0
-        2.upto(num/2) do |i|
+        2.upto(Math.sqrt(num).to_i) do |i|
             if (num%i==0)
                 count+=1
             end
@@ -73,44 +73,16 @@ end
 
 prime_numbers [1, 2, 3, 4, 5, 7, 6, 9, 11, 12, 13]
 
-# Ruby program to find the prime numbers 
-# from the array
-
-arr = [12,45,23,39,37];
-
-i = 0;
-j = 0;
-flag = 0;
-        
-print "Prime Numbers are:\n";
-while(i<arr.size)
-    flag = 0;
-    j=2;
-    
-    while(j<arr[i]/2)
-        if(arr[i]%j==0)
-            flag=1;
-        end
-        j=j+1
-    end
-
-    if(flag == 0)
-        p arr[i]," ";
-    end
-    i=i+1		
-end
-
-
 # Write a program for fuel indication. Ex: 0 -> Out of fuel, 1-10 -> Low, Please fill, 11-30 -> Good for now, 31-50 -> Almost Full, > 50 -> Full
 
 def fuel_indication n
     if (n == 0)
         return 'Out of fuel'
-    elsif (1..10).include? n
+    elsif (n > 0 && n <= 10)
         return 'Low, Please fill'
-    elsif (11..30).include? n
+    elsif (n > 10 && n <= 30)
         return 'Good for now'
-    elsif (30..50).include? n
+    elsif (n > 30 && n <= 50)
         return 'Almost Full'
     elsif (n > 50)
         return 'Full'
@@ -137,7 +109,7 @@ arr[rand(arr.length)]
 # Program to Count the Number of Each Vowel
 
 def vowel_count rand_str
-    vow_cnt = {};
+    vow_cnt = {}
     vowels = ['a', 'e', 'i', 'o', 'u']
     rnd_str_count = rand_str.length
 
@@ -159,7 +131,7 @@ def hash_sort_value h
 
     inv_arr_keys.each do |j, v|
         0.upto(inv_arr_keys.size-2) do |i|
-            if inv_arr_keys[i] < inv_arr_keys[i+1]
+            if inv_arr_keys[i] > inv_arr_keys[i+1]
                 inv_arr_keys[i], inv_arr_keys[i+1] = inv_arr_keys[i+1], inv_arr_keys[i]
             end
         end
@@ -189,4 +161,4 @@ def arr_merge arr1, arr2
     merged_arr
 end
 
-arr_merge [1, 2, 3, 4], ['a', 'b', 'c', 'd', 'e']
+arr_merge [1, 2, 3, 4], ['a', 'b', 'c', 'd']

@@ -14,7 +14,13 @@ puts (0..str1.length).find_all { |i| str1[i,4] == 'RUBY'}
 puts '
 c. Create array of words in string 1 & print them using a recursive function?'
 split_str1 = str1.split(' ')
-split_str1.each { |i| puts split_str1[i] }
+
+def word_arr i = 0, split_str1
+    return if split_str1.length == i
+    puts split_str1[i]
+    word_arr(i + 1, split_str1)
+end
+word_arr(0, split_str1)
 
 puts '
 d. Capitalise string 1'
@@ -29,7 +35,7 @@ puts str1 + str2
 puts '
 f. Cut the string 1 into 4 parts & print it.'
 
-puts str1.chars.each_slice(str1.length/3).map(&:join)
+puts str1.split(' ', 4)
 
 puts '
 g. Divide the string 1 by occurrences of ".". Combine the array in reverse word sequence'
