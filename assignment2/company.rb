@@ -27,34 +27,29 @@ end
 
 class Company
     include Designation
-    def initialize(emp_data)
-        @emp_data = emp_data
+    def initialize(employee)
+        @employee = employee
     end
 
     def emp_details 
-        puts "Employee Name: #{@emp_data['name']}"
-        puts "Employee email: #{@emp_data['email']}"
-        puts "Employee experience: #{@emp_data['experience']} years and #{@emp_data['designation']}"
-        puts "Employee Salary: #{@emp_data['salary']}"
-        puts "Employee stack: #{division(@emp_data['stack'])}"
+        puts "Employee Name: #{@employee.name}"
+        puts "Employee email: #{@employee.email}"
+        puts "Employee experience: #{@employee.emp_experience} years and #{@employee.get_designation}"
+        puts "Employee Salary: #{@employee.salary}"
+        puts "Employee stack: #{division(@employee.stack)}"
     end
 
     private
 
     def division emp_stack
-        division = {'web_development': 'ruby', 'mobile_development': 'android'}
-
-        division.each do |k, v|
-            if (v == emp_stack)
-                return k
-            end
-        end
+        division = {web_development: 'ruby', mobile_development: 'android'}
+        division.key(emp_stack)
     end
 end
 
 class Getemployees  
     def self.read_emp_details
-        emp_hash = [];
+        emp_list = [];
         CSV.foreach("employees.csv") do |row|
             if (row[1] != "FIRST_NAME")
                 temp_arr = {}
@@ -64,16 +59,15 @@ class Getemployees
                 temp_arr['experience'] = get_experience(row[5])
                 temp_arr['salary'] = row[7]
                 temp_arr['stack'] = 'ruby'
-                if temp_arr['experience'] > 2
-                    emp = SeniorSD.new(temp_arr['experience'])
+                if temp_arr['experience'] > 5
+                    emp = SeniorSD.new(temp_arr)
                 else
-                    emp = JuniorSD.new(temp_arr['experience'])
+                    emp = JuniorSD.new(temp_arr)
                 end
-                temp_arr['designation'] = emp.designation 
-                emp_hash << temp_arr
+                emp_list << emp
             end
         end
-        emp_hash
+        emp_list
     end
 
     private
