@@ -42,8 +42,8 @@ class Company
     private
 
     def division emp_stack
-        division = {web_development: 'ruby', mobile_development: 'android'}
-        division.key(emp_stack)
+        emp_division = {web_development: 'ruby', mobile_development: 'android'}
+        emp_division.key(emp_stack)
     end
 end
 
