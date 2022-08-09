@@ -1,6 +1,8 @@
 require 'csv'
 require './employee.rb'
 
+EMP_DIVISION = {web_development: 'ruby', mobile_development: 'android'}
+
 module Designation
     def self.included(klass)
         klass.extend(ClassMethods)
@@ -36,14 +38,7 @@ class Company
         puts "Employee email: #{@employee.email}"
         puts "Employee experience: #{@employee.emp_experience} years and #{@employee.get_designation}"
         puts "Employee Salary: #{@employee.salary}"
-        puts "Employee stack: #{division(@employee.stack)}"
-    end
-
-    private
-
-    def division emp_stack
-        emp_division = {web_development: 'ruby', mobile_development: 'android'}
-        emp_division.key(emp_stack)
+        puts "Employee stack: #{EMP_DIVISION.key(@employee.stack)}"
     end
 end
 
