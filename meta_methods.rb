@@ -17,8 +17,14 @@ end
 my_lambda.call("a", "b", "c")
 
 #define method
-define_method :mult do |*my_arg|
-    my_arg.inject(1, :*)
+class Interest
+  ["kiran", "sai"].each do |action|
+    define_method("take_#{action}") do |argument|
+      "#{action} likes #{argument}."
+    end
+  end
 end
 
-puts mult(2, 5, 10)
+interest = Interest.new
+puts interest.take_kiran("Chocolate")
+puts interest.take_sai("Ice Cream")
